@@ -1,15 +1,8 @@
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 
 const ControlsContext = createContext({
   fov: 75,
-  setFov: (value: number) => {},
+  setFov: (_value: number) => {},
 });
 
 export const useControlsContext = () => useContext(ControlsContext);

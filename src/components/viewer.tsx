@@ -9,9 +9,6 @@ import {
 import { Canvas, useLoader } from "@react-three/fiber";
 import { Suspense, useState } from "react";
 import * as THREE from "three";
-import { Label } from "./ui/label";
-import { Slider } from "./ui/slider";
-import { Button } from "./ui/button";
 import { useControlsContext } from "@/providers";
 
 const store = [

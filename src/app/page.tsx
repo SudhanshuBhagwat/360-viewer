@@ -1,5 +1,9 @@
-import App from "@/components/viewer";
+import App from "@/components/app";
 
 export default function Home() {
-  return <App />;
+  return (
+    <div className="h-screen relative">
+      <App />
+    </div>
+  );
 }

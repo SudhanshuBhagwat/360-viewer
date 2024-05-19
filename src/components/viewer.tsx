@@ -11,6 +11,8 @@ import { Suspense, useState } from "react";
 import * as THREE from "three";
 import { Label } from "./ui/label";
 import { Slider } from "./ui/slider";
+import { Button } from "./ui/button";
+import { useControlsContext } from "@/providers";
 
 const store = [
   {
@@ -80,11 +82,12 @@ function Portals() {
   return <Dome onClick={() => set(link)} {...props} texture={maps[which]} />;
 }
 
-function Viewer({ fovAmount }: { fovAmount: number }) {
+export default function Viewer() {
+  const { fov } = useControlsContext();
+
   return (
-    <>
-      <PerspectiveCamera position={[0, 0, 0.1]} fov={fovAmount} makeDefault />
-      <PerspectiveCamera fov={150} />
+    <Canvas>
+      <PerspectiveCamera position={[0, 0, 0.1]} fov={fov} makeDefault />
       <OrbitControls
         enableZoom={false}
         enablePan={false}
@@ -97,46 +100,6 @@ function Viewer({ fovAmount }: { fovAmount: number }) {
         <Preload all />
         <Portals />
       </Suspense>
-    </>
-  );
-}
-
-export default function App() {
-  const [fov, setFov] = useState(75);
-
-  return (
-    <div className="h-screen relative">
-      <Canvas>
-        <Viewer fovAmount={fov} />
-      </Canvas>
-      <div
-        id="controls"
-        className="absolute top-6 right-6 bg-white dark:bg-zinc-900 rounded-lg p-6 border-2 border-zinc-700 dark:border-gray-200 shadow-md"
-      >
-        <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">Dimensions</h4>
-            <p className="text-sm text-muted-foreground">
-              Set the dimensions for the layer.
-            </p>
-          </div>
-          <div className="grid gap-2">
-            <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="fov">FOV</Label>
-              <div className="w-full col-span-2">
-                <Slider
-                  name="fov"
-                  defaultValue={[fov]}
-                  max={90}
-                  min={60}
-                  step={1}
-                  onValueChange={(value) => setFov(value[0])}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </Canvas>
   );
 }

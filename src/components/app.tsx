@@ -6,9 +6,11 @@ import Editor from "./editor";
 
 export default function App() {
   return (
-    <ControlsProvider>
-      <Editor />
-      <Controls />
-    </ControlsProvider>
+    <div className="relative flex flex-grow flex-shrink-0 basis-0">
+      <ControlsProvider>
+        <Editor />
+        <Controls />
+      </ControlsProvider>
+    </div>
   );
 }

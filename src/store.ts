@@ -1,6 +1,7 @@
 import * as THREE from "three";
+import { Scene } from "./types";
 
-export const scenes = [
+export const scenes: Scene[] = [
   {
     name: "Living Room",
     position: new THREE.Vector3(

@@ -23,7 +23,7 @@ function Dome({
 }) {
   return (
     <group>
-      <mesh onClick={(event) => console.log(event)} scale={[-1, 1, 1]}>
+      <mesh onPointerUp={(event) => console.log(event)} scale={[-1, 1, 1]}>
         <sphereGeometry args={[500, 32, 32]} />
         <meshBasicMaterial
           map={texture}

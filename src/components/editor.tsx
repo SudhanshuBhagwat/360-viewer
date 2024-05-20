@@ -7,7 +7,7 @@ import {
   Preload,
 } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import * as THREE from "three";
 import { useControlsContext } from "@/providers";
 import { scenes } from "@/store";
@@ -16,12 +16,10 @@ function Dome({
   name,
   position,
   texture,
-  onClick,
 }: {
   name: string;
   position: THREE.Vector3;
   texture: THREE.Texture;
-  onClick: () => void;
 }) {
   return (
     <group>
@@ -35,10 +33,7 @@ function Dome({
       </mesh>
       <mesh position={position}>
         <Html center>
-          <button
-            className="text-black bg-gray-200 px-3 py-1 rounded select-none"
-            onClick={onClick}
-          >
+          <button className="text-black bg-gray-200 px-3 py-1 rounded select-none">
             {name}
           </button>
         </Html>
@@ -48,16 +43,16 @@ function Dome({
 }
 
 function Portals() {
-  const [which, set] = useState(0);
-  const { link, ...props } = scenes[which];
+  const { currentScene } = useControlsContext();
+  const { link, ...props } = scenes[currentScene];
   const maps = useLoader(
     THREE.TextureLoader,
     scenes.map((entry) => entry.url)
   );
-  return <Dome onClick={() => set(link)} {...props} texture={maps[which]} />;
+  return <Dome {...props} texture={maps[currentScene]} />;
 }
 
-export default function Viewer() {
+export default function Editor() {
   const { fov } = useControlsContext();
 
   return (

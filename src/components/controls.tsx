@@ -1,6 +1,5 @@
 "use client";
 
-import { useControlsContext } from "@/providers";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
 import { Slider } from "./ui/slider";
@@ -9,7 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
-import { MAX_FOV, MIN_FOV } from "@/constants";
+import { DEFAULT_FOV, MAX_FOV, MIN_FOV } from "@/constants";
 import {
   Select,
   SelectContent,
@@ -24,6 +23,7 @@ import {
   Crosshair1Icon,
   TargetIcon,
 } from "@radix-ui/react-icons";
+import { updateCurrentScene, updateFov, useSceneStore } from "@/store";
 
 const MARKERS = [
   {
@@ -37,8 +37,11 @@ const MARKERS = [
 ];
 
 export default function Controls() {
-  const { fov, setFov, scenes, currentScene, setCurrentScene } =
-    useControlsContext();
+  const [fov, currentScene, scenes] = useSceneStore((state) => [
+    state.fov,
+    state.currentScene,
+    state.scenes,
+  ]);
 
   return (
     <div className="absolute top-6 right-6 space-y-2 max-w-80 min-w-80 select-none">
@@ -55,15 +58,15 @@ export default function Controls() {
             <Label className="whitespace-nowrap">Current Scene: </Label>
             <Select
               defaultValue={String(currentScene)}
-              onValueChange={(value) => setCurrentScene(Number(value))}
+              onValueChange={(value) => updateCurrentScene(Number(value))}
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select a scene" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {scenes.map((scene) => (
-                    <SelectItem key={scene.link} value={String(scene.link)}>
+                  {scenes.map((scene, index) => (
+                    <SelectItem key={scene.id} value={String(index)}>
                       {scene.name}
                     </SelectItem>
                   ))}
@@ -98,11 +101,13 @@ export default function Controls() {
                       min={MIN_FOV}
                       step={1}
                       value={[fov]}
-                      onValueChange={(value) => setFov(value[0])}
+                      onValueChange={(value) => updateFov(value[0])}
                     />
                   </div>
                 </div>
-                <Button onClick={() => setFov(75)}>Reset FOV</Button>
+                <Button onClick={() => updateFov(DEFAULT_FOV)}>
+                  Reset FOV
+                </Button>
               </div>
             </div>
           </div>

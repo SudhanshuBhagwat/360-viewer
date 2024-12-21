@@ -24,6 +24,7 @@ import {
   TargetIcon,
 } from "@radix-ui/react-icons";
 import { updateCurrentScene, updateFov, useSceneStore } from "@/store";
+import { Separator } from "./ui/separator";
 
 const MARKERS = [
   {
@@ -131,6 +132,10 @@ export default function Controls() {
                 {MARKERS.map((marker) => (
                   <div key={marker.name}>{marker.icon}</div>
                 ))}
+              </div>
+              <Separator />
+              <div>
+                <p>Select a marker for controls</p>
               </div>
             </div>
           </div>

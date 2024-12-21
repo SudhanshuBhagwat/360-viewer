@@ -14,10 +14,12 @@ export default function Portals() {
     THREE.TextureLoader,
     scenes.map((entry) => entry.url)
   );
+
   return (
     <Dome
       shouldTeleport={mode === "PREVIEW"}
       {...props}
+      sceneId={scenes[currentScene].id}
       texture={maps[currentScene]}
     />
   );

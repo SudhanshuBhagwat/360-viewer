@@ -30,9 +30,9 @@ export const scenes: Scene[] = [
         id: 2,
         name: "Kitchen",
         position: new THREE.Vector3(
-          -259.60585644279956,
-          -43.43365502674772,
-          -230.4146853826204
+          -378.6986401890879,
+          -15.897281506151787,
+          -321.6886734953721
         ),
         to: 0,
       },
@@ -57,7 +57,7 @@ export const useSceneStore = create<ISceneStore>((set) => ({
 }));
 
 export const updateFov = (fov: number) => {
-  useSceneStore.setState((state) => ({ fov }));
+  useSceneStore.setState((_) => ({ fov }));
 };
 
 export const updateMode = (mode: Mode) => {
@@ -65,9 +65,33 @@ export const updateMode = (mode: Mode) => {
 };
 
 export const updateCurrentScene = (scene: number) => {
-  useSceneStore.setState((state) => ({ currentScene: scene }));
+  useSceneStore.setState((_) => ({ currentScene: scene }));
 };
 
 export const updateSelectedMarker = (selectedMarker: number) => {
-  useSceneStore.setState((state) => ({ selectedMarker }));
+  useSceneStore.setState((_) => ({ selectedMarker }));
+};
+
+export const addMarker = (sceneId: number, position: THREE.Vector3) => {
+  useSceneStore.setState((state) => {
+    const allScenes = state.scenes.map((scene) => {
+      if (scene.id === sceneId) {
+        const markers = scene.markers;
+        markers.push({
+          id: Math.random() * 1000,
+          name: "Kitchen",
+          position: new THREE.Vector3(position.x, position.y, position.z),
+          to: 0,
+        });
+        return {
+          ...scene,
+          markers,
+        };
+      }
+      return scene;
+    });
+    return {
+      scenes: allScenes,
+    };
+  });
 };

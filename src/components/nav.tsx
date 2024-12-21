@@ -1,5 +1,7 @@
-import Link from "next/link";
 import { CircleUser, Package2 } from "lucide-react";
+import Link from "next/link";
+import { ModeChanger } from "./mode-changer";
+import { Button } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +10,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
 
 export default function Nav() {
   return (
@@ -22,7 +23,10 @@ export default function Nav() {
           Dashboard
         </Link>
       </nav>
-      <div className="flex items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+      <div className="flex items-center space-x-2">
+        <ModeChanger />
+      </div>
+      <div className="flex items-center gap-4 md:gap-2 lg:gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="secondary" size="icon" className="rounded-full">
